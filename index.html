@@ -29,13 +29,13 @@
       font-size: 2.6em;
       margin: 0;
       color: #fff;
-      text-shadow: 0 0 15px rgba(255,255,255,0.7);
+      text-shadow: 0 0 20px rgba(255,255,255,0.8);
       animation: fadeIn 3s ease-in-out;
     }
 
     h2 {
-      font-size: 1.4em;
-      margin-top: 15px;
+      font-size: 1.3em;
+      margin-top: 10px;
       font-weight: 300;
       opacity: 0.9;
     }
@@ -49,6 +49,7 @@
       min-height: 60px;
       color: #fff;
       text-shadow: 0 0 10px rgba(0,0,0,0.2);
+      white-space: pre-line;
     }
 
     button {
@@ -79,6 +80,7 @@
       bottom: 0;
       opacity: 0.7;
       animation: float 6s linear infinite;
+      filter: drop-shadow(0 0 10px rgba(255,255,255,0.7));
     }
 
     .heart::before,
@@ -95,8 +97,9 @@
     .heart::after { top: 0; left: -10px; }
 
     @keyframes float {
-      0% { transform: translateY(0) rotate(45deg); opacity: 1; }
-      100% { transform: translateY(-700px) rotate(45deg); opacity: 0; }
+      0% { transform: translateY(0) rotate(45deg) scale(1); opacity: 1; }
+      50% { transform: translateY(-350px) rotate(45deg) scale(1.5); opacity: 0.8; }
+      100% { transform: translateY(-700px) rotate(45deg) scale(1); opacity: 0; }
     }
 
     @keyframes fadeIn {
@@ -104,7 +107,6 @@
       to { opacity: 1; transform: translateY(0); }
     }
 
-    /* Responsive cho điện thoại */
     @media (max-width: 600px) {
       h1 { font-size: 2em; }
       #message { font-size: 1em; }
@@ -114,31 +116,60 @@
 </head>
 <body>
   <h1>💖 Anh Khang 💕 Bé Khuê 💖</h1>
-  <h2>Gửi đến Bé Iu - người con gái anh thương nhất ♥</h2>
+  <h2>Gửi đến Bé iu - người con gái anh thương nhất ♥</h2>
   <div id="message"></div>
   <button onclick="startLove()">Bấm để xem điều bất ngờ 💌</button>
 
-  <!-- Nhạc YouTube -->
-  <iframe id="ytplayer" width="0" height="0"
-    src="https://www.youtube.com/embed/rIXhXaQ8tiM?autoplay=1&controls=0&loop=1&playlist=rIXhXaQ8tiM"
-    frameborder="0" allow="autoplay; encrypted-media"></iframe>
+  <!-- Nhạc nền -->
+  <audio id="loveMusic" loop>
+    <source src="https://www.yt-download.org/api/button/mp3/rIXhXaQ8tiM" type="audio/mpeg">
+  </audio>
 
   <script>
-    const text = "Bé Khuê à 💗\nCảm ơn em vì đã đến bên Anh.\nMỗi khoảnh khắc có em đều thật đáng trân trọng.\nAnh thương em nhiều lắm ♥";
-    let i = 0;
+    const lines = [
+      "Bé Khuê à 💗",
+      "Cảm ơn em vì đã đến bên Anh...",
+      "Mỗi khoảnh khắc có em đều thật đáng trân trọng 💞",
+      "Anh thương em nhiều lắm ♥",
+      "Mãi bên nhau nhé 💫"
+    ];
 
-    function typeMessage() {
-      if (i < text.length) {
-        document.getElementById("message").innerHTML += text.charAt(i);
-        i++;
-        setTimeout(typeMessage, 80);
+    let lineIndex = 0;
+
+    function typeLine(line, callback) {
+      let i = 0;
+      const msg = document.getElementById("message");
+      const speed = 70;
+      msg.innerHTML = "";
+      function typing() {
+        if (i < line.length) {
+          msg.innerHTML += line.charAt(i);
+          i++;
+          setTimeout(typing, speed);
+        } else {
+          setTimeout(callback, 1200);
+        }
+      }
+      typing();
+    }
+
+    function showNextLine() {
+      if (lineIndex < lines.length) {
+        typeLine(lines[lineIndex], () => {
+          lineIndex++;
+          showNextLine();
+        });
       }
     }
 
     function startLove() {
       document.querySelector("button").style.display = "none";
-      typeMessage();
+      const music = document.getElementById("loveMusic");
+      music.play().catch(() => {
+        alert("Nếu nhạc chưa chạy, hãy chạm vào màn hình nhé 🎶");
+      });
       setInterval(createHeart, 250);
+      showNextLine();
     }
 
     function createHeart() {
