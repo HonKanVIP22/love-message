@@ -4,10 +4,6 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>💖 Anh Khang 💕 Bé Khuê 💖</title>
-
-  <!-- model-viewer để hiển thị mô hình 3D -->
-  <script type="module" src="https://unpkg.com/@google/model-viewer/dist/model-viewer.min.js"></script>
-
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Great+Vibes&family=Poppins:wght@300;500&display=swap');
 
@@ -18,6 +14,7 @@
       padding: 0;
       height: 100vh;
       overflow: hidden;
+      background: radial-gradient(circle at top, #ff9a9e, #fad0c4);
       display: flex;
       flex-direction: column;
       align-items: center;
@@ -25,17 +22,6 @@
       text-align: center;
       font-family: 'Poppins', sans-serif;
       color: #fff;
-    }
-
-    /* 🔸 3D background */
-    model-viewer {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      z-index: -1;
-      background: radial-gradient(circle at top, #ff9a9e, #fad0c4);
     }
 
     h1 {
@@ -86,12 +72,14 @@
     }
 
     .heart {
-      position: relative;
+      position: fixed;
       width: 20px;
       height: 20px;
       background: red;
       transform: rotate(45deg);
+      bottom: 0;
       opacity: 0.7;
+      animation: float 6s linear forwards;
       filter: drop-shadow(0 0 10px rgba(255,255,255,0.7));
     }
 
@@ -108,27 +96,29 @@
     .heart::before { top: -10px; left: 0; }
     .heart::after { top: 0; left: -10px; }
 
-    .heart-container {
+    /* 🐻 Gấu */
+    .bear {
       position: fixed;
       bottom: 0;
-      animation: float 6s linear forwards;
+      transform: translateX(-50%) scale(1);
+      animation: float 6s linear forwards, spin 6s linear infinite;
       pointer-events: none;
     }
 
-    .bear-img {
-      position: absolute;
-      top: -60px;
-      left: -20px;
+    .bear img {
       width: 60px;
-      height: 60px;
-      user-select: none;
-      pointer-events: none;
+      height: auto;
     }
 
     @keyframes float {
-      0% { transform: translateY(0) scale(1); opacity: 1; }
-      50% { transform: translateY(-350px) scale(1.5); opacity: 0.8; }
-      100% { transform: translateY(-700px) scale(1); opacity: 0; }
+      0% { transform: translateY(0) rotate(0) scale(1); opacity: 1; }
+      50% { transform: translateY(-350px) rotate(0) scale(1.2); opacity: 0.8; }
+      100% { transform: translateY(-700px) rotate(0) scale(1); opacity: 0; }
+    }
+
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
     }
 
     @keyframes fadeIn {
@@ -144,18 +134,6 @@
   </style>
 </head>
 <body>
-
-  <!-- 🌸 Mô hình 3D làm nền -->
-  <model-viewer
-    src="scene.gltf"
-    autoplay
-    auto-rotate
-    disable-zoom
-    camera-controls
-    exposure="1.3"
-    shadow-intensity="1">
-  </model-viewer>
-
   <h1>💖 Anh Khang 💕 Bé Khuê 💖</h1>
   <h2>Gửi đến Bé iu - người con gái anh thương nhất ♥</h2>
   <div id="message"></div>
@@ -163,7 +141,7 @@
 
   <!-- Nhạc nền -->
   <audio id="loveMusic" autoplay loop>
-    <source src="NGAY_DAU_TIEN.mp3" type="audio/mpeg">
+    <source src="NGÀY ĐẦU TIÊN - ĐỨC PHÚC  DANCE PERFORMANCE - ĐỨC PHÚC OFFICIAL (youtube).mp3" type="audio/mpeg">
     Trình duyệt của bạn không hỗ trợ phát nhạc.
   </audio>
 
@@ -210,29 +188,35 @@
       music.play().catch(() => {
         alert("Nếu nhạc chưa chạy, hãy chạm vào màn hình nhé 🎶");
       });
-      setInterval(createHeart, 300);
+      setInterval(() => {
+        // tạo ngẫu nhiên tim hoặc gấu
+        if (Math.random() < 0.6) { // 60% là trái tim
+          createHeart();
+        } else { // 40% là gấu
+          createBear();
+        }
+      }, 300);
       showNextLine();
     }
 
     function createHeart() {
-      const container = document.createElement('div');
-      container.classList.add('heart-container');
-      container.style.left = Math.random() * 100 + 'vw';
-      container.style.animationDuration = (Math.random() * 3 + 3) + 's';
-
       const heart = document.createElement('div');
       heart.classList.add('heart');
+      heart.style.left = Math.random() * 100 + 'vw';
       heart.style.background = `hsl(${Math.random() * 360}, 80%, 70%)`;
+      heart.style.animationDuration = (Math.random() * 3 + 3) + 's';
+      document.body.appendChild(heart);
+      setTimeout(() => heart.remove(), 6000);
+    }
 
-      const bear = document.createElement('img');
-      bear.classList.add('bear-img');
-      bear.src = 'Pasted-20251008-145924_preview_rev_1.png'; // 👉 đặt ảnh gấu ở cùng thư mục
-
-      container.appendChild(heart);
-      container.appendChild(bear);
-      document.body.appendChild(container);
-
-      setTimeout(() => container.remove(), 6000);
+    function createBear() {
+      const bear = document.createElement('div');
+      bear.classList.add('bear');
+      bear.style.left = Math.random() * 100 + 'vw';
+      bear.style.animationDuration = (Math.random() * 3 + 3) + 's';
+      bear.innerHTML = `<img src="gau.png" alt="bear">`;
+      document.body.appendChild(bear);
+      setTimeout(() => bear.remove(), 6000);
     }
   </script>
 </body>
