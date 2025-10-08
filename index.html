@@ -102,4 +102,138 @@
       width: 20px;
       height: 20px;
       background: red;
-      border-radius:
+      border-radius: 50%;
+    }
+
+    .heart::before { top: -10px; left: 0; }
+    .heart::after { top: 0; left: -10px; }
+
+    .heart-container {
+      position: fixed;
+      bottom: 0;
+      animation: float 6s linear forwards;
+      pointer-events: none;
+    }
+
+    .bear-img {
+      position: absolute;
+      top: -60px;
+      left: -20px;
+      width: 60px;
+      height: 60px;
+      user-select: none;
+      pointer-events: none;
+    }
+
+    @keyframes float {
+      0% { transform: translateY(0) scale(1); opacity: 1; }
+      50% { transform: translateY(-350px) scale(1.5); opacity: 0.8; }
+      100% { transform: translateY(-700px) scale(1); opacity: 0; }
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @media (max-width: 600px) {
+      h1 { font-size: 2em; }
+      #message { font-size: 1em; }
+      button { padding: 10px 25px; font-size: 1em; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- 🌸 Mô hình 3D làm nền -->
+  <model-viewer
+    src="scene.gltf"
+    autoplay
+    auto-rotate
+    disable-zoom
+    camera-controls
+    exposure="1.3"
+    shadow-intensity="1">
+  </model-viewer>
+
+  <h1>💖 Anh Khang 💕 Bé Khuê 💖</h1>
+  <h2>Gửi đến Bé iu - người con gái anh thương nhất ♥</h2>
+  <div id="message"></div>
+  <button onclick="startLove()">Bấm để xem điều bất ngờ 💌</button>
+
+  <!-- Nhạc nền -->
+  <audio id="loveMusic" autoplay loop>
+    <source src="NGAY_DAU_TIEN.mp3" type="audio/mpeg">
+    Trình duyệt của bạn không hỗ trợ phát nhạc.
+  </audio>
+
+  <script>
+    const lines = [
+      "Bé Khuê à 💗",
+      "Cảm ơn em vì đã đến bên Anh...",
+      "Mỗi khoảnh khắc có em đều thật đáng trân trọng 💞",
+      "Anh thương em nhiều lắm ♥",
+      "Mãi bên nhau nhé 💫"
+    ];
+
+    let lineIndex = 0;
+
+    function typeLine(line, callback) {
+      let i = 0;
+      const msg = document.getElementById("message");
+      const speed = 70;
+      msg.innerHTML = "";
+      function typing() {
+        if (i < line.length) {
+          msg.innerHTML += line.charAt(i);
+          i++;
+          setTimeout(typing, speed);
+        } else {
+          setTimeout(callback, 1200);
+        }
+      }
+      typing();
+    }
+
+    function showNextLine() {
+      if (lineIndex < lines.length) {
+        typeLine(lines[lineIndex], () => {
+          lineIndex++;
+          showNextLine();
+        });
+      }
+    }
+
+    function startLove() {
+      document.querySelector("button").style.display = "none";
+      const music = document.getElementById("loveMusic");
+      music.play().catch(() => {
+        alert("Nếu nhạc chưa chạy, hãy chạm vào màn hình nhé 🎶");
+      });
+      setInterval(createHeart, 300);
+      showNextLine();
+    }
+
+    function createHeart() {
+      const container = document.createElement('div');
+      container.classList.add('heart-container');
+      container.style.left = Math.random() * 100 + 'vw';
+      container.style.animationDuration = (Math.random() * 3 + 3) + 's';
+
+      const heart = document.createElement('div');
+      heart.classList.add('heart');
+      heart.style.background = `hsl(${Math.random() * 360}, 80%, 70%)`;
+
+      const bear = document.createElement('img');
+      bear.classList.add('bear-img');
+      bear.src = 'Pasted-20251008-145924_preview_rev_1.png'; // 👉 đặt ảnh gấu ở cùng thư mục
+
+      container.appendChild(heart);
+      container.appendChild(bear);
+      document.body.appendChild(container);
+
+      setTimeout(() => container.remove(), 6000);
+    }
+  </script>
+</body>
+</html>
