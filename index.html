@@ -101,7 +101,7 @@
       position: fixed;
       bottom: 0;
       transform: translateX(-50%) scale(1);
-      animation: float 6s linear forwards, spin 6s linear infinite;
+      animation: float 6s linear forwards;
       pointer-events: none;
     }
 
@@ -114,11 +114,6 @@
       0% { transform: translateY(0) rotate(0) scale(1); opacity: 1; }
       50% { transform: translateY(-350px) rotate(0) scale(1.2); opacity: 0.8; }
       100% { transform: translateY(-700px) rotate(0) scale(1); opacity: 0; }
-    }
-
-    @keyframes spin {
-      0% { transform: rotate(0deg); }
-      100% { transform: rotate(360deg); }
     }
 
     @keyframes fadeIn {
@@ -189,10 +184,9 @@
         alert("Nếu nhạc chưa chạy, hãy chạm vào màn hình nhé 🎶");
       });
       setInterval(() => {
-        // tạo ngẫu nhiên tim hoặc gấu
-        if (Math.random() < 0.6) { // 60% là trái tim
+        if (Math.random() < 0.6) {
           createHeart();
-        } else { // 40% là gấu
+        } else {
           createBear();
         }
       }, 300);
