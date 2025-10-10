@@ -2,283 +2,94 @@
 <html lang="vi">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>💖 Anh Khang 💕 Bé Khuê 💖</title>
   <style>
-    @import url('https://fonts.googleapis.com/css2?family=Great+Vibes&family=Poppins:wght@300;500&display=swap');
-
-    * { box-sizing: border-box; }
-    body {
+    body, html {
       margin: 0;
       padding: 0;
-      height: 100vh;
       overflow: hidden;
-      background: pink url('nen.jpg') center/cover no-repeat;
-      background-attachment: fixed;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
+      height: 100vh;
+      background: pink;
+      font-family: "Comic Sans MS", cursive;
       text-align: center;
-      font-family: 'Poppins', sans-serif;
-      color: #fff;
     }
 
-    h1 {
-      font-family: 'Great Vibes', cursive;
-      font-size: 2.6em;
-      margin: 0;
-      color: #fff;
-      text-shadow: 0 0 20px rgba(255,255,255,0.8);
-      animation: fadeIn 3s ease-in-out;
-    }
-
-    h2 {
-      font-size: 1.3em;
-      margin-top: 10px;
-      font-weight: 300;
-      opacity: 0.9;
-    }
-
-    #message {
-      font-size: 1.2em;
-      margin-top: 20px;
-      width: 80%;
-      max-width: 400px;
-      line-height: 1.6em;
-      min-height: 60px;
-      color: #fff;
-      text-shadow: 0 0 10px rgba(0,0,0,0.2);
-      white-space: pre-line;
-    }
-
-    button {
-      margin-top: 30px;
-      background: white;
-      color: #ff4081;
-      border: none;
-      border-radius: 30px;
-      padding: 12px 30px;
-      font-size: 1.1em;
-      cursor: pointer;
-      transition: 0.3s;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.3);
-    }
-
-    button:hover {
-      background: #ff80ab;
-      color: white;
-      transform: scale(1.05);
-    }
-
-    /* 💖 Trái tim nhỏ không phát sáng */
-    .heart {
-      position: fixed;
-      width: 25px;
-      height: 25px;
-      background: #ff69b4;
-      transform: rotate(45deg);
-      bottom: 0;
-      opacity: 0.95;
-    }
-    .heart::before,
-    .heart::after {
-      content: '';
-      position: absolute;
-      width: 25px;
-      height: 25px;
-      background: inherit;
-      border-radius: 50%;
-    }
-    .heart::before { top: -12.5px; left: 0; }
-    .heart::after { top: 0; left: -12.5px; }
-
-    /* ✨ Kim tuyến */
-    .sparkle {
-      position: fixed;
-      width: 5px;
-      height: 5px;
-      background: white;
-      border-radius: 50%;
-      pointer-events: none;
-      opacity: 0.8;
-      animation: sparkleFloat 1.8s linear forwards;
-    }
-    @keyframes sparkleFloat {
-      0% { transform: translateY(0) scale(1); opacity: 1; }
-      100% { transform: translateY(-150px) scale(0); opacity: 0; }
-    }
-
-    /* 🐻 Gấu bay */
-    .bear {
-      position: fixed;
-      bottom: -60px;
-      transform: translateX(-50%) scale(1);
-      pointer-events: none;
-      animation: floatBear 6s linear forwards;
-    }
-    .bear img {
-      width: 60px;
-      height: auto;
-    }
-    @keyframes floatBear {
-      0% { transform: translateY(0) scale(1); opacity: 1; }
-      100% { transform: translateY(-600px) scale(0.9); opacity: 0; }
-    }
-
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(20px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-
-    /* 🪄 BỔ SUNG HIỆU ỨNG CỬA */
+    /* Hiệu ứng cánh cửa */
     .door {
       position: fixed;
       top: 0;
-      bottom: 0;
       width: 50%;
-      background: linear-gradient(to bottom, #ffb6c1, #ffc0cb);
-      z-index: 999;
-      transition: transform 2s ease;
+      height: 100%;
+      background: url('1000026182.jpg') center/cover no-repeat;
+      transition: transform 2s ease-in-out;
+      z-index: 10;
     }
-    #doorLeft {
-      left: 0;
-      transform-origin: left;
+    .door.left { left: 0; }
+    .door.right { right: 0; }
+
+    .open .door.left { transform: translateX(-100%); }
+    .open .door.right { transform: translateX(100%); }
+
+    /* Nội dung chính */
+    #main-content {
+      opacity: 0;
+      transition: opacity 1.5s ease;
+      padding-top: 100px;
     }
-    #doorRight {
-      right: 0;
-      transform-origin: right;
+
+    .show-content #main-content {
+      opacity: 1;
     }
-    .openLeft {
-      transform: translateX(-100%);
+
+    h1 {
+      font-size: 2.2rem;
+      color: #ff3366;
+      text-shadow: 2px 2px 4px white;
     }
-    .openRight {
-      transform: translateX(100%);
+
+    h2 {
+      font-size: 1.3rem;
+      color: #6b0000;
+    }
+
+    button {
+      background: #ff6699;
+      color: white;
+      font-size: 1.2rem;
+      padding: 12px 20px;
+      border: none;
+      border-radius: 20px;
+      cursor: pointer;
+      margin-top: 30px;
+    }
+    button:hover {
+      background: #ff3366;
     }
   </style>
 </head>
 <body>
-  <!-- 🪄 Cửa mở -->
-  <div id="doorLeft" class="door"></div>
-  <div id="doorRight" class="door"></div>
+  <!-- Cánh cửa mở -->
+  <div class="door left"></div>
+  <div class="door right"></div>
 
-  <h1>💖 Anh Khang 💕 Bé Khuê 💖</h1>
-  <h2>Gửi đến Bé iu - người con gái anh thương nhất ♥</h2>
-  <div id="message"></div>
-  <button onclick="startLove()">Bấm để xem nhưng tâm tình của anh hehe 💌</button>
+  <!-- Nội dung -->
+  <div id="main-content">
+    <h1>💖 Anh Khang 💕 Bé Khuê 💖</h1>
+    <h2>Gửi đến Bé iu - người con gái anh thương nhất ♥</h2>
+    <div id="message"></div>
+  </div>
 
-  <audio id="loveMusic" autoplay loop>
-    <source src="love.mp3" type="audio/mpeg">
-  </audio>
-
-  <!-- 🪄 Âm thanh mở cửa -->
-  <audio id="doorSound">
-    <source src="door.mp3" type="audio/mpeg">
-  </audio>
+  <!-- Nút bắt đầu -->
+  <button onclick="startLove()">Bấm để xem những tâm tình của anh hehe 💌</button>
 
   <script>
-    const lines = [
-      "Bé Khuê à 💗",
-      "Cảm ơn em vì đã đến bên Anh...",
-      "Mỗi khoảnh khắc có em đều thật đáng trân trọng 💞",
-      "Anh thương em nhiều lắm ♥",
-      "Mãi bên nhau nhé 💫"
-    ];
-    let lineIndex = 0;
-
-    function typeLine(line, callback) {
-      let i = 0;
-      const msg = document.getElementById("message");
-      msg.innerHTML = "";
-      function typing() {
-        if (i < line.length) {
-          msg.innerHTML += line.charAt(i);
-          i++;
-          setTimeout(typing, 70);
-        } else {
-          setTimeout(callback, 1200);
-        }
-      }
-      typing();
-    }
-
-    function showNextLine() {
-      if (lineIndex < lines.length) {
-        typeLine(lines[lineIndex], () => {
-          lineIndex++;
-          showNextLine();
-        });
-      }
-    }
-
     function startLove() {
-      document.querySelector("button").style.display = "none";
+      document.body.classList.add('open');
 
-      // 🪄 mở cửa
-      document.getElementById("doorLeft").classList.add("openLeft");
-      document.getElementById("doorRight").classList.add("openRight");
-      const doorSound = document.getElementById("doorSound");
-      doorSound.play();
-
-      const music = document.getElementById("loveMusic");
-      music.play().catch(() => alert("Nếu nhạc chưa chạy, hãy chạm vào màn hình nhé 🎶"));
-
-      setInterval(() => {
-        if (Math.random() < 0.7) {
-          createHeart();
-        } else {
-          createBear();
-        }
-      }, 300);
-      showNextLine();
-    }
-
-    function createHeart() {
-      const heart = document.createElement('div');
-      heart.classList.add('heart');
-
-      // Vị trí ban đầu
-      const startX = Math.random() * window.innerWidth;
-      heart.style.left = startX + 'px';
-      heart.style.bottom = '0px';
-      document.body.appendChild(heart);
-
-      let posY = 0;
-      const speed = 2 + Math.random() * 2;
-      const wave = 50 + Math.random() * 50;
-      const frequency = 0.02 + Math.random() * 0.02;
-
-      const interval = setInterval(() => {
-        posY += speed;
-        const x = startX + Math.sin(posY * frequency) * wave;
-        heart.style.left = x + 'px';
-        heart.style.bottom = posY + 'px';
-        heart.style.opacity = 1 - posY / window.innerHeight;
-
-        if (posY > window.innerHeight + 100) {
-          clearInterval(interval);
-          heart.remove();
-        }
-      }, 20);
-
-      for (let i = 0; i < 8; i++) {
-        const sparkle = document.createElement('div');
-        sparkle.classList.add('sparkle');
-        sparkle.style.left = (startX + (Math.random() * 20 - 10)) + 'px';
-        sparkle.style.bottom = '0px';
-        sparkle.style.animationDelay = Math.random() * 0.5 + 's';
-        document.body.appendChild(sparkle);
-        setTimeout(() => sparkle.remove(), 1800);
-      }
-    }
-
-    function createBear() {
-      const bear = document.createElement('div');
-      bear.classList.add('bear');
-      bear.style.left = Math.random() * 100 + 'vw';
-      bear.innerHTML = `<img src="gau.png" alt="bear">`;
-      document.body.appendChild(bear);
-      setTimeout(() => bear.remove(), 6000);
+      // Sau khi cửa mở xong thì hiện nội dung
+      setTimeout(() => {
+        document.body.classList.add('show-content');
+      }, 2000);
     }
   </script>
 </body>
