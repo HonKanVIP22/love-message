@@ -70,35 +70,34 @@
       transform: scale(1.05);
     }
 
-    /* 💖 Trái tim phát sáng + đập nhịp */
+    /* 💖 Trái tim phát sáng + đập nhịp + bay lên */
     .heart {
       position: fixed;
-      width: 30px;
-      height: 30px;
+      width: 40px;
+      height: 40px;
       background: #ff69b4;
       transform: rotate(45deg);
-      bottom: -40px;
-      opacity: 0.9;
-      box-shadow: 0 0 25px rgba(255, 105, 180, 0.9);
-      filter: drop-shadow(0 0 20px rgba(255, 192, 203, 0.8));
-      animation: floatHeart 5s linear forwards, heartbeat 1.2s ease-in-out infinite;
+      bottom: -50px;
+      opacity: 0.95;
+      box-shadow: 0 0 30px 10px rgba(255, 105, 180, 0.8);
+      filter: drop-shadow(0 0 25px rgba(255, 192, 203, 0.9));
+      animation: floatHeart 7s ease-out forwards, heartbeat 1.2s ease-in-out infinite;
     }
-
     .heart::before,
     .heart::after {
       content: '';
       position: absolute;
-      width: 30px;
-      height: 30px;
+      width: 40px;
+      height: 40px;
       background: inherit;
       border-radius: 50%;
     }
-    .heart::before { top: -15px; left: 0; }
-    .heart::after { top: 0; left: -15px; }
+    .heart::before { top: -20px; left: 0; }
+    .heart::after { top: 0; left: -20px; }
 
     @keyframes floatHeart {
       0% { transform: translateY(0) rotate(45deg) scale(1); opacity: 1; }
-      100% { transform: translateY(-800px) rotate(45deg) scale(0.8); opacity: 0; }
+      100% { transform: translateY(-900px) rotate(45deg) scale(0.8); opacity: 0; }
     }
 
     @keyframes heartbeat {
@@ -116,11 +115,11 @@
       pointer-events: none;
       box-shadow: 0 0 8px white;
       opacity: 0.8;
-      animation: sparkleFloat 1.5s linear forwards;
+      animation: sparkleFloat 1.8s linear forwards;
     }
     @keyframes sparkleFloat {
       0% { transform: translateY(0) scale(1); opacity: 1; }
-      100% { transform: translateY(-100px) scale(0); opacity: 0; }
+      100% { transform: translateY(-150px) scale(0); opacity: 0; }
     }
 
     /* 🐻 Gấu bay */
@@ -211,19 +210,19 @@
       heart.classList.add('heart');
       heart.style.left = Math.random() * 100 + 'vw';
 
-      // Kim tuyến xung quanh tim
-      for (let i = 0; i < 6; i++) {
+      // ✨ Rải kim tuyến quanh tim
+      for (let i = 0; i < 8; i++) {
         const sparkle = document.createElement('div');
         sparkle.classList.add('sparkle');
-        sparkle.style.left = (parseFloat(heart.style.left) + Math.random() * 2 - 1) + 'vw';
+        sparkle.style.left = (parseFloat(heart.style.left) + (Math.random() * 4 - 2)) + 'vw';
         sparkle.style.bottom = '0';
         sparkle.style.animationDelay = Math.random() * 0.5 + 's';
         document.body.appendChild(sparkle);
-        setTimeout(() => sparkle.remove(), 1500);
+        setTimeout(() => sparkle.remove(), 1800);
       }
 
       document.body.appendChild(heart);
-      setTimeout(() => heart.remove(), 5000);
+      setTimeout(() => heart.remove(), 7000);
     }
 
     function createBear() {
