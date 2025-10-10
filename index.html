@@ -70,34 +70,45 @@
       transform: scale(1.05);
     }
 
-    /* 💖 Trái tim màu hồng phát sáng + đập nhịp + kim tuyến */
+    /* 💖 Trái tim phát sáng + đập nhịp */
     .heart {
       position: fixed;
-      width: 25px;
-      height: 25px;
+      width: 30px;
+      height: 30px;
       background: #ff69b4;
       transform: rotate(45deg);
-      bottom: 0;
+      bottom: -40px;
       opacity: 0.9;
-      box-shadow: 0 0 20px rgba(255, 105, 180, 0.8), 0 0 40px rgba(255, 182, 193, 0.6);
-      filter: drop-shadow(0 0 10px rgba(255, 192, 203, 0.8));
-      animation: floatHeart linear forwards, heartbeat 1s ease-in-out infinite;
+      box-shadow: 0 0 25px rgba(255, 105, 180, 0.9);
+      filter: drop-shadow(0 0 20px rgba(255, 192, 203, 0.8));
+      animation: floatHeart linear forwards, heartbeat 1.2s ease-in-out infinite;
     }
 
     .heart::before,
     .heart::after {
       content: '';
       position: absolute;
-      width: 25px;
-      height: 25px;
+      width: 30px;
+      height: 30px;
       background: inherit;
       border-radius: 50%;
     }
+    .heart::before { top: -15px; left: 0; }
+    .heart::after { top: 0; left: -15px; }
 
-    .heart::before { top: -12px; left: 0; }
-    .heart::after { top: 0; left: -12px; }
+    /* 🌸 Bay lên */
+    @keyframes floatHeart {
+      0% { transform: translateY(0) rotate(45deg) scale(1); opacity: 1; }
+      100% { transform: translateY(-800px) rotate(45deg) scale(0.8); opacity: 0; }
+    }
 
-    /* 🌈 Kim tuyến */
+    /* 💓 Nhịp tim */
+    @keyframes heartbeat {
+      0%, 100% { transform: rotate(45deg) scale(1); }
+      50% { transform: rotate(45deg) scale(1.4); }
+    }
+
+    /* ✨ Kim tuyến */
     .sparkle {
       position: fixed;
       width: 6px;
@@ -105,18 +116,22 @@
       background: white;
       border-radius: 50%;
       pointer-events: none;
-      box-shadow: 0 0 10px white;
+      box-shadow: 0 0 8px white;
       opacity: 0.8;
       animation: sparkleFloat 1.5s linear forwards;
     }
+    @keyframes sparkleFloat {
+      0% { transform: translateY(0) scale(1); opacity: 1; }
+      100% { transform: translateY(-100px) scale(0); opacity: 0; }
+    }
 
-    /* 🐻 Gấu */
+    /* 🐻 Gấu bay */
     .bear {
       position: fixed;
-      bottom: 0;
+      bottom: -50px;
       transform: translateX(-50%) scale(1);
       pointer-events: none;
-      animation: float 6s linear forwards;
+      animation: floatBear 6s linear forwards;
     }
 
     .bear img {
@@ -124,48 +139,9 @@
       height: auto;
     }
 
-    /* 🌸 Animation trái tim bay */
-    @keyframes floatHeart {
-      0% {
-        transform: translateY(0) translateX(0) rotate(45deg) scale(1);
-        opacity: 1;
-      }
-      25% {
-        transform: translateY(-200px) translateX(-30px) rotate(45deg) scale(1.2);
-        opacity: 0.9;
-      }
-      50% {
-        transform: translateY(-400px) translateX(30px) rotate(45deg) scale(1.1);
-        opacity: 0.8;
-      }
-      75% {
-        transform: translateY(-600px) translateX(-20px) rotate(45deg) scale(1);
-        opacity: 0.6;
-      }
-      100% {
-        transform: translateY(-800px) translateX(0) rotate(45deg) scale(0.8);
-        opacity: 0;
-      }
-    }
-
-    /* 💓 Hiệu ứng tim đập */
-    @keyframes heartbeat {
-      0%, 100% { transform: rotate(45deg) scale(1); }
-      25% { transform: rotate(45deg) scale(1.3); }
-      50% { transform: rotate(45deg) scale(0.9); }
-      75% { transform: rotate(45deg) scale(1.2); }
-    }
-
-    /* ✨ Kim tuyến bay */
-    @keyframes sparkleFloat {
+    @keyframes floatBear {
       0% { transform: translateY(0) scale(1); opacity: 1; }
-      100% { transform: translateY(-100px) scale(0); opacity: 0; }
-    }
-
-    @keyframes float {
-      0% { transform: translateY(0) scale(1); opacity: 1; }
-      50% { transform: translateY(-350px) scale(1.2); opacity: 0.8; }
-      100% { transform: translateY(-700px) scale(1); opacity: 0; }
+      100% { transform: translateY(-600px) scale(0.9); opacity: 0; }
     }
 
     @keyframes fadeIn {
@@ -192,19 +168,17 @@
       "Anh thương em nhiều lắm ♥",
       "Mãi bên nhau nhé 💫"
     ];
-
     let lineIndex = 0;
 
     function typeLine(line, callback) {
       let i = 0;
       const msg = document.getElementById("message");
-      const speed = 70;
       msg.innerHTML = "";
       function typing() {
         if (i < line.length) {
           msg.innerHTML += line.charAt(i);
           i++;
-          setTimeout(typing, speed);
+          setTimeout(typing, 70);
         } else {
           setTimeout(callback, 1200);
         }
@@ -224,9 +198,8 @@
     function startLove() {
       document.querySelector("button").style.display = "none";
       const music = document.getElementById("loveMusic");
-      music.play().catch(() => {
-        alert("Nếu nhạc chưa chạy, hãy chạm vào màn hình nhé 🎶");
-      });
+      music.play().catch(() => alert("Nếu nhạc chưa chạy, hãy chạm vào màn hình nhé 🎶"));
+
       setInterval(() => {
         if (Math.random() < 0.7) {
           createHeart();
@@ -241,15 +214,12 @@
       const heart = document.createElement('div');
       heart.classList.add('heart');
       heart.style.left = Math.random() * 100 + 'vw';
-      const duration = Math.random() * 3 + 4;
-      heart.style.animationDuration = `${duration}s, 1s`;
 
-      // tạo kim tuyến cho mỗi trái tim
-      let sparkleCount = 6 + Math.floor(Math.random() * 4);
-      for (let i = 0; i < sparkleCount; i++) {
+      // Kim tuyến xung quanh tim
+      for (let i = 0; i < 6; i++) {
         const sparkle = document.createElement('div');
         sparkle.classList.add('sparkle');
-        sparkle.style.left = (parseFloat(heart.style.left) + Math.random() * 3 - 1.5) + 'vw';
+        sparkle.style.left = (parseFloat(heart.style.left) + Math.random() * 2 - 1) + 'vw';
         sparkle.style.bottom = '0';
         sparkle.style.animationDelay = Math.random() * 0.5 + 's';
         document.body.appendChild(sparkle);
@@ -257,14 +227,13 @@
       }
 
       document.body.appendChild(heart);
-      setTimeout(() => heart.remove(), duration * 1000);
+      setTimeout(() => heart.remove(), 5000);
     }
 
     function createBear() {
       const bear = document.createElement('div');
       bear.classList.add('bear');
       bear.style.left = Math.random() * 100 + 'vw';
-      bear.style.animationDuration = (Math.random() * 3 + 3) + 's';
       bear.innerHTML = `<img src="gau.png" alt="bear">`;
       document.body.appendChild(bear);
       setTimeout(() => bear.remove(), 6000);
