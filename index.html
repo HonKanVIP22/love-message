@@ -8,20 +8,65 @@
     @import url('https://fonts.googleapis.com/css2?family=Great+Vibes&family=Poppins:wght@300;500&display=swap');
 
     * { box-sizing: border-box; }
-    body {
+    html, body {
       margin: 0;
       padding: 0;
       height: 100vh;
       overflow: hidden;
+      font-family: 'Poppins', sans-serif;
+      color: #fff;
+    }
+
+    /* 🌸 Intro - cánh cửa mở */
+    #intro {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(to bottom, pink, hotpink);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 10;
+      transition: transform 2s ease-in-out;
+    }
+    #intro.hide {
+      transform: translateY(100%);
+    }
+    #start-btn {
+      padding: 15px 40px;
+      background: white;
+      color: hotpink;
+      font-size: 24px;
+      border: none;
+      border-radius: 50px;
+      cursor: pointer;
+      box-shadow: 0 0 15px rgba(255, 105, 180, 0.7);
+      transition: 0.3s;
+    }
+    #start-btn:hover {
+      background: hotpink;
+      color: white;
+      transform: scale(1.1);
+    }
+
+    /* 🌹 Nội dung chính */
+    #main {
       background: pink url('nen.jpg') center/cover no-repeat;
       background-attachment: fixed;
+      width: 100%;
+      height: 100%;
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
       text-align: center;
-      font-family: 'Poppins', sans-serif;
-      color: #fff;
+      opacity: 0;
+      transition: opacity 1.5s ease-in-out;
+    }
+    #main.show {
+      opacity: 1;
     }
 
     h1 {
@@ -52,26 +97,7 @@
       white-space: pre-line;
     }
 
-    button {
-      margin-top: 30px;
-      background: white;
-      color: #ff4081;
-      border: none;
-      border-radius: 30px;
-      padding: 12px 30px;
-      font-size: 1.1em;
-      cursor: pointer;
-      transition: 0.3s;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.3);
-    }
-
-    button:hover {
-      background: #ff80ab;
-      color: white;
-      transform: scale(1.05);
-    }
-
-    /* 💖 Trái tim nhỏ không phát sáng */
+    /* 💖 Trái tim nhỏ */
     .heart {
       position: fixed;
       width: 25px;
@@ -133,16 +159,27 @@
   </style>
 </head>
 <body>
-  <h1>💖 Anh Khang 💕 Bé Khuê 💖</h1>
-  <h2>Gửi đến Bé iu - người con gái anh thương nhất ♥</h2>
-  <div id="message"></div>
-  <button onclick="startLove()">Bấm để xem nhưng tâm tình của anh hehe 💌</button>
+  <!-- Intro -->
+  <div id="intro">
+    <button id="start-btn">💖 Bắt đầu 💖</button>
+  </div>
+
+  <!-- Nội dung chính -->
+  <div id="main">
+    <h1>💖 Anh Khang 💕 Bé Khuê 💖</h1>
+    <h2>Gửi đến Bé iu - người con gái anh thương nhất ♥</h2>
+    <div id="message"></div>
+  </div>
 
   <audio id="loveMusic" autoplay loop>
     <source src="love.mp3" type="audio/mpeg">
   </audio>
 
   <script>
+    const startBtn = document.getElementById('start-btn');
+    const intro = document.getElementById('intro');
+    const main = document.getElementById('main');
+
     const lines = [
       "Bé Khuê à 💗",
       "Cảm ơn em vì đã đến bên Anh...",
@@ -151,6 +188,14 @@
       "Mãi bên nhau nhé 💫"
     ];
     let lineIndex = 0;
+
+    startBtn.addEventListener('click', () => {
+      intro.classList.add('hide');
+      setTimeout(() => {
+        main.classList.add('show');
+        startLove();
+      }, 2000);
+    });
 
     function typeLine(line, callback) {
       let i = 0;
@@ -178,7 +223,6 @@
     }
 
     function startLove() {
-      document.querySelector("button").style.display = "none";
       const music = document.getElementById("loveMusic");
       music.play().catch(() => alert("Nếu nhạc chưa chạy, hãy chạm vào màn hình nhé 🎶"));
 
@@ -195,14 +239,11 @@
     function createHeart() {
       const heart = document.createElement('div');
       heart.classList.add('heart');
-
-      // Vị trí ban đầu
       const startX = Math.random() * window.innerWidth;
       heart.style.left = startX + 'px';
       heart.style.bottom = '0px';
       document.body.appendChild(heart);
 
-      // Hiệu ứng bay lượn sóng
       let posY = 0;
       const speed = 2 + Math.random() * 2;
       const wave = 50 + Math.random() * 50;
@@ -214,14 +255,12 @@
         heart.style.left = x + 'px';
         heart.style.bottom = posY + 'px';
         heart.style.opacity = 1 - posY / window.innerHeight;
-
         if (posY > window.innerHeight + 100) {
           clearInterval(interval);
           heart.remove();
         }
       }, 20);
 
-      // ✨ Kim tuyến
       for (let i = 0; i < 8; i++) {
         const sparkle = document.createElement('div');
         sparkle.classList.add('sparkle');
