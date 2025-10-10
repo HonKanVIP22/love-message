@@ -71,18 +71,18 @@
       transform: scale(1.05);
     }
 
-    /* 💖 Trái tim phát sáng + đập nhịp + bay lên */
+    /* 💖 Trái tim */
     .heart {
       position: fixed;
       width: 40px;
       height: 40px;
       background: #ff69b4;
       transform: rotate(45deg);
-      bottom: -60px;
+      bottom: 0;
       opacity: 0.95;
       box-shadow: 0 0 30px 10px rgba(255, 105, 180, 0.8);
       filter: drop-shadow(0 0 25px rgba(255, 192, 203, 0.9));
-      animation: floatHeart 7s linear forwards, heartbeat 1.2s ease-in-out infinite;
+      animation: heartbeat 1.2s ease-in-out infinite;
     }
     .heart::before,
     .heart::after {
@@ -95,11 +95,6 @@
     }
     .heart::before { top: -20px; left: 0; }
     .heart::after { top: 0; left: -20px; }
-
-    @keyframes floatHeart {
-      0% { transform: translateY(0) rotate(45deg) scale(1); opacity: 1; }
-      100% { transform: translateY(-110vh) rotate(45deg) scale(0.8); opacity: 0; }
-    }
 
     @keyframes heartbeat {
       0%, 100% { transform: rotate(45deg) scale(1); }
@@ -209,21 +204,42 @@
     function createHeart() {
       const heart = document.createElement('div');
       heart.classList.add('heart');
-      heart.style.left = Math.random() * 100 + 'vw';
 
-      // ✨ Rải kim tuyến quanh tim
+      // Vị trí ban đầu
+      const startX = Math.random() * window.innerWidth;
+      heart.style.left = startX + 'px';
+      heart.style.bottom = '0px';
+      document.body.appendChild(heart);
+
+      // Hiệu ứng bay lượn sóng
+      let posY = 0;
+      const speed = 2 + Math.random() * 2;
+      const wave = 50 + Math.random() * 50;
+      const frequency = 0.02 + Math.random() * 0.02;
+
+      const interval = setInterval(() => {
+        posY += speed;
+        const x = startX + Math.sin(posY * frequency) * wave;
+        heart.style.left = x + 'px';
+        heart.style.bottom = posY + 'px';
+        heart.style.opacity = 1 - posY / window.innerHeight;
+
+        if (posY > window.innerHeight + 100) {
+          clearInterval(interval);
+          heart.remove();
+        }
+      }, 20);
+
+      // ✨ Kim tuyến
       for (let i = 0; i < 8; i++) {
         const sparkle = document.createElement('div');
         sparkle.classList.add('sparkle');
-        sparkle.style.left = (parseFloat(heart.style.left) + (Math.random() * 4 - 2)) + 'vw';
-        sparkle.style.bottom = '0';
+        sparkle.style.left = (startX + (Math.random() * 20 - 10)) + 'px';
+        sparkle.style.bottom = '0px';
         sparkle.style.animationDelay = Math.random() * 0.5 + 's';
         document.body.appendChild(sparkle);
         setTimeout(() => sparkle.remove(), 1800);
       }
-
-      document.body.appendChild(heart);
-      setTimeout(() => heart.remove(), 7000);
     }
 
     function createBear() {
