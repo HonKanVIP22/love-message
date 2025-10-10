@@ -13,7 +13,7 @@
       padding: 0;
       height: 100vh;
       overflow: hidden;
-      background: pink url('https://i.imgur.com/4PNdRSM.png') center/cover no-repeat;
+      background: pink url('nen.jpg') center/cover no-repeat;
       background-attachment: fixed;
       display: flex;
       flex-direction: column;
@@ -78,11 +78,11 @@
       height: 40px;
       background: #ff69b4;
       transform: rotate(45deg);
-      bottom: -50px;
+      bottom: -60px;
       opacity: 0.95;
       box-shadow: 0 0 30px 10px rgba(255, 105, 180, 0.8);
       filter: drop-shadow(0 0 25px rgba(255, 192, 203, 0.9));
-      animation: floatHeart 7s ease-out forwards, heartbeat 1.2s ease-in-out infinite;
+      animation: floatHeart 7s linear forwards, heartbeat 1.2s ease-in-out infinite;
     }
     .heart::before,
     .heart::after {
@@ -98,7 +98,7 @@
 
     @keyframes floatHeart {
       0% { transform: translateY(0) rotate(45deg) scale(1); opacity: 1; }
-      100% { transform: translateY(-900px) rotate(45deg) scale(0.8); opacity: 0; }
+      100% { transform: translateY(-110vh) rotate(45deg) scale(0.8); opacity: 0; }
     }
 
     @keyframes heartbeat {
