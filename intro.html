@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>💖 Mở đầu tình yêu 💖</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    body {
+      overflow: hidden;
+      background: black;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+    video {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+    .overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.3);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      text-align: center;
+      font-family: 'Poppins', sans-serif;
+      animation: fadeInText 3s ease-in-out;
+    }
+    h1 {
+      font-size: 2.8em;
+      text-shadow: 0 0 20px pink;
+      font-family: 'Great Vibes', cursive;
+    }
+    @keyframes fadeInText {
+      from { opacity: 0; transform: translateY(30px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+  </style>
+</head>
+<body>
+  <!-- 🎥 Video mở đầu -->
+  <video autoplay muted playsinline id="introVideo">
+    <source src="intro.mp4" type="video/mp4" />
+    Trình duyệt không hỗ trợ video.
+  </video>
+
+  <div class="overlay">
+    <h1>💖 Anh Khang 💕 Bé Khuê 💖</h1>
+    <p>Khoảnh khắc đầu tiên của tình yêu bắt đầu tại đây 💫</p>
+  </div>
+
+  <script>
+    const video = document.getElementById('introVideo');
+    video.addEventListener('ended', () => {
+      window.location.href = "index.html"; // 👉 chuyển sang trang chính sau khi video kết thúc
+    });
+
+    // Nếu bạn muốn auto chuyển sau 10 giây (dù video chưa hết)
+    setTimeout(() => {
+      window.location.href = "index.html";
+    }, 10000);
+  </script>
+</body>
+</html>
