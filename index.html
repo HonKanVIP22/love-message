@@ -138,8 +138,10 @@
   <div id="message"></div>
   <button onclick="startLove()">Bấm để xem nhưng tâm tình của anh hehe 💌</button>
 
-  <audio id="loveMusic" autoplay loop>
-    <source src="love.mp3" type="audio/mpeg">
+  <!-- NHẠC: tên file mp3 chính xác của bạn -->
+  <audio id="loveMusic" preload="auto" loop playsinline>
+    <source src="NGÀY ĐẦU TIÊN - ĐỨC PHÚC  DANCE PERFORMANCE - ĐỨC PHÚC OFFICIAL (youtube).mp3" type="audio/mpeg">
+    Trình duyệt không hỗ trợ thẻ audio.
   </audio>
 
   <script>
@@ -180,7 +182,11 @@
     function startLove() {
       document.querySelector("button").style.display = "none";
       const music = document.getElementById("loveMusic");
-      music.play().catch(() => alert("Nếu nhạc chưa chạy, hãy chạm vào màn hình nhé 🎶"));
+      // phát nhạc (click của người dùng cho phép)
+      music.currentTime = 0;
+      music.play().catch(() => {
+        alert("Nếu nhạc chưa chạy, hãy chạm vào màn hình để cho phép phát nhạc 🎶");
+      });
 
       setInterval(() => {
         if (Math.random() < 0.7) {
