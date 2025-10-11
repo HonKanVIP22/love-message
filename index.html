@@ -71,7 +71,7 @@
       transform: scale(1.05);
     }
 
-    /* 💖 Trái tim nhỏ không phát sáng */
+    /* 💖 Trái tim nhỏ */
     .heart {
       position: fixed;
       width: 25px;
@@ -136,12 +136,10 @@
   <h1>💖 Anh Khang 💕 Bé Khuê 💖</h1>
   <h2>Gửi đến Bé iu - người con gái anh thương nhất ♥</h2>
   <div id="message"></div>
-  <button onclick="startLove()">Bấm để xem nhưng tâm tình của anh hehe 💌</button>
+  <button onclick="startLove()">Bấm để xem những tâm tình của anh 💌</button>
 
-  <!-- NHẠC: tên file mp3 chính xác của bạn -->
   <audio id="loveMusic" preload="auto" loop playsinline>
     <source src="NGÀY ĐẦU TIÊN - ĐỨC PHÚC  DANCE PERFORMANCE - ĐỨC PHÚC OFFICIAL (youtube).mp3" type="audio/mpeg">
-    Trình duyệt không hỗ trợ thẻ audio.
   </audio>
 
   <script>
@@ -182,37 +180,32 @@
     function startLove() {
       document.querySelector("button").style.display = "none";
       const music = document.getElementById("loveMusic");
-      // phát nhạc (click của người dùng cho phép)
       music.currentTime = 0;
-      music.play().catch(() => {
-        alert("Nếu nhạc chưa chạy, hãy chạm vào màn hình để cho phép phát nhạc 🎶");
-      });
+      music.play().catch(() => alert("Nếu nhạc chưa chạy, hãy chạm vào màn hình nhé 🎶"));
 
       setInterval(() => {
-        if (Math.random() < 0.7) {
+        if (Math.random() < 0.8) {
           createHeart();
         } else {
           createBear();
         }
-      }, 300);
+      }, 500); // tạo ít hơn để không quá nhanh
       showNextLine();
     }
 
     function createHeart() {
       const heart = document.createElement('div');
       heart.classList.add('heart');
-
-      // Vị trí ban đầu
       const startX = Math.random() * window.innerWidth;
       heart.style.left = startX + 'px';
       heart.style.bottom = '0px';
       document.body.appendChild(heart);
 
-      // Hiệu ứng bay lượn sóng
+      // 💗 CHỈNH CHẬM HƠN Ở ĐÂY
       let posY = 0;
-      const speed = 2 + Math.random() * 2;
-      const wave = 50 + Math.random() * 50;
-      const frequency = 0.02 + Math.random() * 0.02;
+      const speed = 0.6 + Math.random() * 1.2; // trước là 2~4 → giờ chậm hơn
+      const wave = 40 + Math.random() * 60;
+      const frequency = 0.01 + Math.random() * 0.015;
 
       const interval = setInterval(() => {
         posY += speed;
@@ -225,7 +218,7 @@
           clearInterval(interval);
           heart.remove();
         }
-      }, 20);
+      }, 30); // khung hình nhẹ nhàng hơn
 
       // ✨ Kim tuyến
       for (let i = 0; i < 8; i++) {
