@@ -6,8 +6,8 @@
   <title>💖 Anh Khang 💕 Bé Khuê 💖</title>
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Great+Vibes&family=Poppins:wght@300;500&display=swap');
-
     * { box-sizing: border-box; }
+
     body {
       margin: 0;
       padding: 0;
@@ -26,22 +26,20 @@
 
     h1 {
       font-family: 'Great Vibes', cursive;
-      font-size: 2.6em;
-      margin: 0;
+      font-size: 2.8em;
       color: #fff;
       text-shadow: 0 0 20px rgba(255,255,255,0.8);
-      animation: fadeIn 3s ease-in-out;
+      animation: fadeIn 2s ease-in-out;
     }
 
     h2 {
-      font-size: 1.3em;
-      margin-top: 10px;
-      font-weight: 300;
+      font-size: 1.2em;
       opacity: 0.9;
+      margin-top: 5px;
     }
 
     #message {
-      font-size: 1.2em;
+      font-size: 1.1em;
       margin-top: 20px;
       width: 80%;
       max-width: 400px;
@@ -53,25 +51,23 @@
     }
 
     button {
-      margin-top: 30px;
+      margin-top: 25px;
       background: white;
       color: #ff4081;
       border: none;
       border-radius: 30px;
-      padding: 12px 30px;
-      font-size: 1.1em;
+      padding: 10px 25px;
+      font-size: 1em;
       cursor: pointer;
       transition: 0.3s;
       box-shadow: 0 4px 10px rgba(0,0,0,0.3);
     }
-
     button:hover {
       background: #ff80ab;
       color: white;
       transform: scale(1.05);
     }
 
-    /* 💖 Trái tim nhỏ không phát sáng */
     .heart {
       position: fixed;
       width: 25px;
@@ -81,8 +77,7 @@
       bottom: 0;
       opacity: 0.95;
     }
-    .heart::before,
-    .heart::after {
+    .heart::before, .heart::after {
       content: '';
       position: absolute;
       width: 25px;
@@ -92,39 +87,6 @@
     }
     .heart::before { top: -12.5px; left: 0; }
     .heart::after { top: 0; left: -12.5px; }
-
-    /* ✨ Kim tuyến */
-    .sparkle {
-      position: fixed;
-      width: 5px;
-      height: 5px;
-      background: white;
-      border-radius: 50%;
-      pointer-events: none;
-      opacity: 0.8;
-      animation: sparkleFloat 1.8s linear forwards;
-    }
-    @keyframes sparkleFloat {
-      0% { transform: translateY(0) scale(1); opacity: 1; }
-      100% { transform: translateY(-150px) scale(0); opacity: 0; }
-    }
-
-    /* 🐻 Gấu bay */
-    .bear {
-      position: fixed;
-      bottom: -60px;
-      transform: translateX(-50%) scale(1);
-      pointer-events: none;
-      animation: floatBear 6s linear forwards;
-    }
-    .bear img {
-      width: 60px;
-      height: auto;
-    }
-    @keyframes floatBear {
-      0% { transform: translateY(0) scale(1); opacity: 1; }
-      100% { transform: translateY(-600px) scale(0.9); opacity: 0; }
-    }
 
     @keyframes fadeIn {
       from { opacity: 0; transform: translateY(20px); }
@@ -136,12 +98,10 @@
   <h1>💖 Anh Khang 💕 Bé Khuê 💖</h1>
   <h2>Gửi đến Bé iu - người con gái anh thương nhất ♥</h2>
   <div id="message"></div>
-  <button onclick="startLove()">Bấm để xem nhưng tâm tình của anh hehe 💌</button>
+  <button onclick="startLove()">Bấm để xem những tâm tình của anh 💌</button>
 
-  <!-- NHẠC: tên file mp3 chính xác của bạn -->
-  <audio id="loveMusic" preload="auto" loop playsinline>
-    <source src="NGÀY ĐẦU TIÊN - ĐỨC PHÚC  DANCE PERFORMANCE - ĐỨC PHÚC OFFICIAL (youtube).mp3" type="audio/mpeg">
-    Trình duyệt không hỗ trợ thẻ audio.
+  <audio id="loveMusic" preload="auto" loop>
+    <source src="love.mp3" type="audio/mpeg">
   </audio>
 
   <script>
@@ -152,100 +112,62 @@
       "Anh thương em nhiều lắm ♥",
       "Mãi bên nhau nhé 💫"
     ];
-    let lineIndex = 0;
+    let i = 0;
 
-    function typeLine(line, callback) {
-      let i = 0;
+    function typeLine(line, cb) {
+      let n = 0;
       const msg = document.getElementById("message");
       msg.innerHTML = "";
       function typing() {
-        if (i < line.length) {
-          msg.innerHTML += line.charAt(i);
-          i++;
-          setTimeout(typing, 70);
+        if (n < line.length) {
+          msg.innerHTML += line.charAt(n);
+          n++;
+          setTimeout(typing, 60);
         } else {
-          setTimeout(callback, 1200);
+          setTimeout(cb, 1000);
         }
       }
       typing();
     }
 
-    function showNextLine() {
-      if (lineIndex < lines.length) {
-        typeLine(lines[lineIndex], () => {
-          lineIndex++;
-          showNextLine();
-        });
+    function showNext() {
+      if (i < lines.length) {
+        typeLine(lines[i], () => { i++; showNext(); });
       }
     }
 
     function startLove() {
       document.querySelector("button").style.display = "none";
       const music = document.getElementById("loveMusic");
-      // phát nhạc (click của người dùng cho phép)
-      music.currentTime = 0;
-      music.play().catch(() => {
-        alert("Nếu nhạc chưa chạy, hãy chạm vào màn hình để cho phép phát nhạc 🎶");
-      });
+      music.play().catch(() => alert("Nếu nhạc chưa chạy, hãy chạm vào màn hình nhé 🎶"));
 
-      setInterval(() => {
-        if (Math.random() < 0.7) {
-          createHeart();
-        } else {
-          createBear();
-        }
-      }, 300);
-      showNextLine();
+      setInterval(() => createHeart(), 400);
+      showNext();
     }
 
     function createHeart() {
-      const heart = document.createElement('div');
-      heart.classList.add('heart');
+      const h = document.createElement('div');
+      h.classList.add('heart');
+      const x = Math.random() * window.innerWidth;
+      h.style.left = x + 'px';
+      h.style.bottom = '0px';
+      document.body.appendChild(h);
 
-      // Vị trí ban đầu
-      const startX = Math.random() * window.innerWidth;
-      heart.style.left = startX + 'px';
-      heart.style.bottom = '0px';
-      document.body.appendChild(heart);
-
-      // Hiệu ứng bay lượn sóng
-      let posY = 0;
-      const speed = 2 + Math.random() * 2;
-      const wave = 50 + Math.random() * 50;
-      const frequency = 0.02 + Math.random() * 0.02;
+      let y = 0;
+      const speed = 1 + Math.random() * 1.5;
+      const wave = 40 + Math.random() * 40;
+      const f = 0.02 + Math.random() * 0.02;
 
       const interval = setInterval(() => {
-        posY += speed;
-        const x = startX + Math.sin(posY * frequency) * wave;
-        heart.style.left = x + 'px';
-        heart.style.bottom = posY + 'px';
-        heart.style.opacity = 1 - posY / window.innerHeight;
-
-        if (posY > window.innerHeight + 100) {
+        y += speed;
+        h.style.left = (x + Math.sin(y * f) * wave) + 'px';
+        h.style.bottom = y + 'px';
+        h.style.opacity = 1 - y / window.innerHeight;
+        if (y > window.innerHeight + 50) {
           clearInterval(interval);
-          heart.remove();
+          h.remove();
         }
-      }, 20);
-
-      // ✨ Kim tuyến
-      for (let i = 0; i < 8; i++) {
-        const sparkle = document.createElement('div');
-        sparkle.classList.add('sparkle');
-        sparkle.style.left = (startX + (Math.random() * 20 - 10)) + 'px';
-        sparkle.style.bottom = '0px';
-        sparkle.style.animationDelay = Math.random() * 0.5 + 's';
-        document.body.appendChild(sparkle);
-        setTimeout(() => sparkle.remove(), 1800);
-      }
-    }
-
-    function createBear() {
-      const bear = document.createElement('div');
-      bear.classList.add('bear');
-      bear.style.left = Math.random() * 100 + 'vw';
-      bear.innerHTML = `<img src="gau.png" alt="bear">`;
-      document.body.appendChild(bear);
-      setTimeout(() => bear.remove(), 6000);
+      }, 30);
     }
   </script>
 </body>
