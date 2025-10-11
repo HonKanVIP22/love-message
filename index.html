@@ -8,62 +8,11 @@
     @import url('https://fonts.googleapis.com/css2?family=Great+Vibes&family=Poppins:wght@300;500&display=swap');
 
     * { box-sizing: border-box; }
-    html, body {
+    body {
       margin: 0;
       padding: 0;
       height: 100vh;
       overflow: hidden;
-      font-family: 'Poppins', sans-serif;
-      color: #fff;
-    }
-
-    /* ===== Intro (cánh cửa + nút Bắt đầu) ===== */
-    #intro {
-      position: fixed;
-      inset: 0;
-      z-index: 9999;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      background: linear-gradient(180deg,#ffc9d2,#ff9fb1);
-      overflow: hidden;
-    }
-
-    .door {
-      position: absolute;
-      top: 0;
-      height: 100%;
-      width: 50%;
-      background: linear-gradient(180deg,#ffb6c1,#ff7ea9);
-      transition: transform 1.6s cubic-bezier(.2,.9,.2,1);
-      box-shadow: inset 0 0 60px rgba(0,0,0,0.05);
-    }
-    .door.left { left: 0; }
-    .door.right { right: 0; }
-
-    /* khi mở */
-    #intro.open .door.left  { transform: translateX(-100%); }
-    #intro.open .door.right { transform: translateX(100%); }
-
-    #btnIntro {
-      position: relative;
-      z-index: 10000;
-      padding: 14px 36px;
-      background: #fff;
-      color: #ff2980;
-      border-radius: 999px;
-      border: none;
-      font-size: 18px;
-      cursor: pointer;
-      box-shadow: 0 8px 30px rgba(255,40,120,0.15);
-    }
-    #btnIntro:active { transform: scale(.98); }
-
-    /* ===== Main content (ẩn trước khi mở cửa) ===== */
-    #main {
-      position: relative;
-      width: 100%;
-      height: 100%;
       background: pink url('nen.jpg') center/cover no-repeat;
       background-attachment: fixed;
       display: flex;
@@ -71,152 +20,129 @@
       align-items: center;
       justify-content: center;
       text-align: center;
-      opacity: 0;
-      pointer-events: none;
-      transition: opacity .9s ease, transform .9s ease;
-      transform: translateY(12px);
-    }
-    #main.visible {
-      opacity: 1;
-      pointer-events: auto;
-      transform: translateY(0);
+      font-family: 'Poppins', sans-serif;
+      color: #fff;
     }
 
     h1 {
       font-family: 'Great Vibes', cursive;
-      font-size: 2.4em;
+      font-size: 2.6em;
       margin: 0;
       color: #fff;
-      text-shadow: 0 0 20px rgba(255,255,255,0.85);
+      text-shadow: 0 0 20px rgba(255,255,255,0.8);
+      animation: fadeIn 3s ease-in-out;
     }
+
     h2 {
-      font-size: 1.1em;
+      font-size: 1.3em;
       margin-top: 10px;
       font-weight: 300;
-      opacity: 0.95;
-      color: #fff;
+      opacity: 0.9;
     }
+
     #message {
-      font-size: 1.05em;
-      margin-top: 18px;
+      font-size: 1.2em;
+      margin-top: 20px;
       width: 80%;
-      max-width: 420px;
+      max-width: 400px;
       line-height: 1.6em;
       min-height: 60px;
       color: #fff;
-      text-shadow: 0 0 8px rgba(0,0,0,0.15);
+      text-shadow: 0 0 10px rgba(0,0,0,0.2);
       white-space: pre-line;
     }
 
-    /* nút gốc (giữ nguyên) */
-    .start-love-btn {
-      margin-top: 22px;
+    button {
+      margin-top: 30px;
       background: white;
       color: #ff4081;
       border: none;
       border-radius: 30px;
       padding: 12px 30px;
-      font-size: 1.05em;
+      font-size: 1.1em;
       cursor: pointer;
-      transition: 0.25s;
-      box-shadow: 0 6px 18px rgba(0,0,0,0.12);
+      transition: 0.3s;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.3);
     }
-    .start-love-btn:hover { transform: scale(1.03); background: #ff80ab; color: #fff; }
 
-    /* ===== Heart / sparkle / bear ===== */
+    button:hover {
+      background: #ff80ab;
+      color: white;
+      transform: scale(1.05);
+    }
+
+    /* 💖 Trái tim nhỏ không phát sáng */
     .heart {
       position: fixed;
-      width: 22px;
-      height: 22px;
+      width: 25px;
+      height: 25px;
       background: #ff69b4;
       transform: rotate(45deg);
-      bottom: 6px;
-      opacity: 1;
-      border-radius: 2px;
-      pointer-events: none;
+      bottom: 0;
+      opacity: 0.95;
     }
     .heart::before,
     .heart::after {
-      content: "";
+      content: '';
       position: absolute;
-      width: 22px;
-      height: 22px;
+      width: 25px;
+      height: 25px;
       background: inherit;
       border-radius: 50%;
     }
-    .heart::before { top: -11px; left: 0; }
-    .heart::after  { top: 0; left: -11px; }
+    .heart::before { top: -12.5px; left: 0; }
+    .heart::after { top: 0; left: -12.5px; }
 
+    /* ✨ Kim tuyến */
     .sparkle {
       position: fixed;
-      width: 6px;
-      height: 6px;
+      width: 5px;
+      height: 5px;
+      background: white;
       border-radius: 50%;
-      background: #fff;
       pointer-events: none;
-      opacity: 0.95;
-      box-shadow: 0 0 6px rgba(255,255,255,0.9);
+      opacity: 0.8;
+      animation: sparkleFloat 1.8s linear forwards;
+    }
+    @keyframes sparkleFloat {
+      0% { transform: translateY(0) scale(1); opacity: 1; }
+      100% { transform: translateY(-150px) scale(0); opacity: 0; }
     }
 
+    /* 🐻 Gấu bay */
     .bear {
       position: fixed;
       bottom: -60px;
+      transform: translateX(-50%) scale(1);
       pointer-events: none;
-      transform: translateX(-50%);
+      animation: floatBear 6s linear forwards;
     }
-    .bear img { width: 56px; height: auto; }
+    .bear img {
+      width: 60px;
+      height: auto;
+    }
+    @keyframes floatBear {
+      0% { transform: translateY(0) scale(1); opacity: 1; }
+      100% { transform: translateY(-600px) scale(0.9); opacity: 0; }
+    }
 
-    /* responsive nhỏ */
-    @media (max-width:420px) {
-      h1 { font-size: 1.8rem; }
-      #btnIntro { font-size: 16px; padding: 12px 28px; }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
     }
   </style>
 </head>
 <body>
+  <h1>💖 Anh Khang 💕 Bé Khuê 💖</h1>
+  <h2>Gửi đến Bé iu - người con gái anh thương nhất ♥</h2>
+  <div id="message"></div>
+  <button onclick="startLove()">Bấm để xem nhưng tâm tình của anh hehe 💌</button>
 
-  <!-- Intro overlay (cửa + nút) -->
-  <div id="intro">
-    <div class="door left"></div>
-    <div class="door right"></div>
-    <button id="btnIntro">💖 Bắt đầu 💖</button>
-  </div>
-
-  <!-- Nội dung chính (GIỮ NGUYÊN phần này như bạn yêu cầu) -->
-  <div id="main">
-    <h1>💖 Anh Khang 💕 Bé Khuê 💖</h1>
-    <h2>Gửi đến Bé iu - người con gái anh thương nhất ♥</h2>
-    <div id="message"></div>
-    <button class="start-love-btn" onclick="startLove()">Bấm để xem nhưng tâm tình của anh hehe 💌</button>
-  </div>
-
-  <!-- âm thanh cửa + nhạc nền -->
-  <audio id="doorSound" src="door.mp3" preload="auto"></audio>
-  <audio id="loveMusic" src="love.mp3" preload="auto" loop></audio>
+  <audio id="loveMusic" autoplay loop>
+    <source src="love.mp3" type="audio/mpeg">
+  </audio>
 
   <script>
-    // --- Door open logic ---
-    const intro = document.getElementById('intro');
-    const btnIntro = document.getElementById('btnIntro');
-    const main = document.getElementById('main');
-    const doorSound = document.getElementById('doorSound');
-
-    btnIntro.addEventListener('click', () => {
-      // play sound (click by user -> allowed on mobile)
-      doorSound.currentTime = 0;
-      doorSound.play().catch(()=>{ /* ignore */ });
-
-      // add class to open doors
-      intro.classList.add('open');
-
-      // after transition, hide intro and show main
-      setTimeout(() => {
-        intro.style.display = 'none';
-        main.classList.add('visible');
-      }, 1600); // should match CSS transition time
-    });
-
-    /* ===== The original "love" behavior (keeps your original content) ===== */
     const lines = [
       "Bé Khuê à 💗",
       "Cảm ơn em vì đã đến bên Anh...",
@@ -225,7 +151,6 @@
       "Mãi bên nhau nhé 💫"
     ];
     let lineIndex = 0;
-    let heartInterval = null;
 
     function typeLine(line, callback) {
       let i = 0;
@@ -253,88 +178,69 @@
     }
 
     function startLove() {
-      // start music (user clicked -> allowed)
+      document.querySelector("button").style.display = "none";
       const music = document.getElementById("loveMusic");
-      music.play().catch(()=>{ /* ignore */ });
+      music.play().catch(() => alert("Nếu nhạc chưa chạy, hãy chạm vào màn hình nhé 🎶"));
 
-      // start generating hearts/gau
-      if (!heartInterval) {
-        heartInterval = setInterval(() => {
-          if (Math.random() < 0.7) createHeart();
-          else createBear();
-        }, 300);
-      }
-
+      setInterval(() => {
+        if (Math.random() < 0.7) {
+          createHeart();
+        } else {
+          createBear();
+        }
+      }, 300);
       showNextLine();
     }
 
-    // create floating heart with wavy path + sparkles
     function createHeart() {
       const heart = document.createElement('div');
-      heart.className = 'heart';
-      const startX = Math.random() * (window.innerWidth - 40) + 20;
-      let posY = -8;
+      heart.classList.add('heart');
+
+      // Vị trí ban đầu
+      const startX = Math.random() * window.innerWidth;
       heart.style.left = startX + 'px';
-      heart.style.bottom = posY + 'px';
+      heart.style.bottom = '0px';
       document.body.appendChild(heart);
 
-      // sparkles around this heart
-      const sparkleCount = 5 + Math.floor(Math.random()*4);
-      const sparkles = [];
-      for (let i=0;i<sparkleCount;i++){
-        const sp = document.createElement('div');
-        sp.className = 'sparkle';
-        sp.style.left = (startX + (Math.random()*40-20)) + 'px';
-        sp.style.bottom = '6px';
-        sp.style.opacity = 0.9;
-        sp.style.transform = `scale(${0.6 + Math.random()*0.8})`;
-        document.body.appendChild(sp);
-        sparkles.push(sp);
-        // remove later
-        setTimeout(()=> { if(sp.parentNode) sp.parentNode.removeChild(sp); }, 1400 + Math.random()*600);
-      }
+      // Hiệu ứng bay lượn sóng
+      let posY = 0;
+      const speed = 2 + Math.random() * 2;
+      const wave = 50 + Math.random() * 50;
+      const frequency = 0.02 + Math.random() * 0.02;
 
-      // animate using requestAnimationFrame for smoothness
-      const speed = 1.8 + Math.random()*1.6;
-      const wave = 40 + Math.random()*70;
-      const freq = 0.02 + Math.random()*0.02;
-      let rafId;
-      function step(){
+      const interval = setInterval(() => {
         posY += speed;
-        const x = startX + Math.sin(posY * freq) * wave;
+        const x = startX + Math.sin(posY * frequency) * wave;
         heart.style.left = x + 'px';
         heart.style.bottom = posY + 'px';
-        heart.style.opacity = 1 - posY / (window.innerHeight*0.9);
-        if (posY > window.innerHeight + 60) {
-          cancelAnimationFrame(rafId);
-          if (heart.parentNode) heart.parentNode.removeChild(heart);
-          return;
+        heart.style.opacity = 1 - posY / window.innerHeight;
+
+        if (posY > window.innerHeight + 100) {
+          clearInterval(interval);
+          heart.remove();
         }
-        rafId = requestAnimationFrame(step);
+      }, 20);
+
+      // ✨ Kim tuyến
+      for (let i = 0; i < 8; i++) {
+        const sparkle = document.createElement('div');
+        sparkle.classList.add('sparkle');
+        sparkle.style.left = (startX + (Math.random() * 20 - 10)) + 'px';
+        sparkle.style.bottom = '0px';
+        sparkle.style.animationDelay = Math.random() * 0.5 + 's';
+        document.body.appendChild(sparkle);
+        setTimeout(() => sparkle.remove(), 1800);
       }
-      rafId = requestAnimationFrame(step);
     }
 
     function createBear() {
       const bear = document.createElement('div');
-      bear.className = 'bear';
-      const startXvw = Math.random()*90 + 5;
-      bear.style.left = startXvw + 'vw';
+      bear.classList.add('bear');
+      bear.style.left = Math.random() * 100 + 'vw';
       bear.innerHTML = `<img src="gau.png" alt="bear">`;
       document.body.appendChild(bear);
-
-      // simple CSS animation with bottom -> translate Y via keyframes already in CSS
-      // remove after 6s
-      setTimeout(()=> { if(bear.parentNode) bear.parentNode.removeChild(bear); }, 6000);
+      setTimeout(() => bear.remove(), 6000);
     }
-
-    // OPTIONAL: stop hearts when page hidden/leave
-    document.addEventListener('visibilitychange', () => {
-      if (document.hidden && heartInterval) {
-        clearInterval(heartInterval);
-        heartInterval = null;
-      }
-    });
   </script>
 </body>
 </html>
